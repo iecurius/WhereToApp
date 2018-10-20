@@ -15,15 +15,14 @@ import java.util.concurrent.ExecutionException;
 
 public class Welcome extends AppCompatActivity implements View.OnClickListener{
 
-    final int radiusW = 1000;
-    final int radiusD = 16093;
-    final int radiusT = 48280;
+    final String radiusW = "1000";
+    final String radiusD = "16093";
+    final String radiusT = "48280";
 
     private ActivityDo activitySelect = null;
     private Range rangeSelect = null;
     private String currLat, currLong;
-    private String placeType = "";
-    private int rad = 0;
+    private String rad = "0";
     ArrayList placesList;
 
     @Override
@@ -69,10 +68,12 @@ public class Welcome extends AppCompatActivity implements View.OnClickListener{
         else
             rad = radiusT;
 
-        GooglePlacesListTask task = new GooglePlacesListTask();
-        placesList = task.execute(currLat, currLong, Integer.toString(rad), activitySelect.toString()).get();
+        GooglePlacesListTask gtask = new GooglePlacesListTask();
+        placesList = gtask.execute(currLat, currLong, rad, activitySelect.toString()).get();
         Place placeToGo = (Place) placesList.get(new Random().nextInt(placesList.size()));
-        System.out.println("PLACE NAME:" + placeToGo.getName());
+        System.out.println("GOOGLE PLACE NAME:" + placeToGo.getName());
+
+        FoursquarePlacesListTask fstask = new FoursquarePlacesListTask();
         
 
     }
