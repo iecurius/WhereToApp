@@ -1,13 +1,13 @@
 package slicksoala.wheretoapp;
 
-public class GPlace {
+public class Place {
     private String name;
     private String category;
     private String rating;
     private String opennow;
     private String vicinity;
     private double latitude,longitude;
-    public GPlace()
+    public Place()
     {
         this.name="";
         this.category="";
