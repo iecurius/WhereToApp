@@ -7,6 +7,7 @@ public class Place {
     private String opennow;
     private String vicinity;
     private double latitude,longitude;
+    private double distance;
     public Place()
     {
         this.name="";
@@ -49,5 +50,8 @@ public class Place {
     {
         this.latitude=lat;
         this.longitude=lon;
+    }
+    public void setDistance(String dist) {
+        this.distance = Double.parseDouble(dist);
     }
 }

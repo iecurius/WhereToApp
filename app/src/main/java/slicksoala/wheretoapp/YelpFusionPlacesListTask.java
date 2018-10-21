@@ -16,42 +16,36 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class YelpFusionPlacesListTask extends AsyncTask<String, Void, ArrayList<Place>> {
-    final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
-    final String API_KEY = "AIzaSyA5ZYJdN-y4AffumiWHX-xUaWDwYS8ZBBU";
-    final String LOC_PAR = "?location=";
+    //https://api.yelp.com/v3/businesses/search?term=food&latitude=33.78508547&longitude=-84.3879824&radius=1000
+    final String YELP_API_BASE = "https://api.yelp.com/v3/businesses/search?";
+    final String API_KEY = "IRT-fzwU1f8luW7wcdWJ5wSzmTOWoJuYKAOMZJtlv-D6s-MVhzGwu7MLn77_A2NWUohglYO_WZhBgejDmHINDKSSP-jzSKFoa_DeL3TdYGrezK1TFeYaHLagsmvLW3Yx";
+    final String TER_PAR = "term=";
+    final String LAT_PAR = "&latitude=";
+    final String LON_PAR = "&longitude=";
     final String RAD_PAR = "&radius=";
-    final String TYP_PAR = "&types=";
-    final String KEY_PAR = "&key=";
+
     String currLat, currLong;
     String rad, activitySelect;
     String placeType;
 
-    final String placeTypePTG = "amusement_park,aquarium,art_gallery,natural_feature,cafe,casino,library,hindu_temple,museum,park,stadium,zoo";
-    final String placeTypeTTD = "bowling_alley,bookstore,gym,shopping_mall,spa,movie_theater,movie_rental";
-    final String placeTypeSTE = "bakery,bar,cafe,food,restaurant";
-
+    final String placeTypePTG = "arts";
+    final String placeTypeTTD = "arts";
+    final String placeTypeSTE = "food";
 
     @Override
     protected ArrayList<Place> doInBackground(String... params) {
         currLat = params[0];
-        currLat = params[1];
+        currLong = params[1];
         rad = params[2];
         activitySelect = params[3];
-        if (activitySelect.equals("PLACESTOGO"))
+        if (activitySelect.equals("Sightseeing"))
             placeType = placeTypePTG;
-        else if (activitySelect.equals("THINGSTODO"))
+        else if (activitySelect.equals("What To Do"))
             placeType = placeTypeTTD;
         else
             placeType = placeTypeSTE;
 
-        String url_base = PLACES_API_BASE + LOC_PAR + currLat + "," + currLong + RAD_PAR +
-                rad;
-        String urlString = "";
-        StringBuffer sb = null;
-        String apikey_base = KEY_PAR + API_KEY;
-
-
-        urlString = url_base + TYP_PAR + placeType + apikey_base;
+        String urlString = YELP_API_BASE + TER_PAR + placeType + LAT_PAR + currLat + LON_PAR + currLong + RAD_PAR + "1000";
 
         URL url;
         HttpURLConnection urlConnection = null;
@@ -62,6 +56,7 @@ public class YelpFusionPlacesListTask extends AsyncTask<String, Void, ArrayList<
         try {
             url = new URL(urlString);
             urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestProperty("Authorization","Bearer " + API_KEY);
 
             InputStream in = urlConnection.getInputStream();
             InputStreamReader reader = new InputStreamReader(in);
@@ -73,48 +68,26 @@ public class YelpFusionPlacesListTask extends AsyncTask<String, Void, ArrayList<
                 data = reader.read();
             }
             jsonObject = new JSONObject(resultString);
-            if (jsonObject.has("results")) {
-                JSONArray jsonArray = jsonObject.getJSONArray("results");
+            if (jsonObject.has("businesses")) {
+                JSONArray jsonArray = jsonObject.getJSONArray("businesses");
                 for (int i = 0; i < jsonArray.length(); i++) {
                     Place poi = new Place();
                     if (jsonArray.getJSONObject(i).has("name")) {
                         poi.setName(jsonArray.getJSONObject(i).optString("name"));
-                        poi.setRating(jsonArray.getJSONObject(i).optString("rating", " "));
-                        if (jsonArray.getJSONObject(i).has("opening_hours")) {
-                            if (jsonArray.getJSONObject(i).getJSONObject("opening_hours").has("open_now")) {
-                                if (jsonArray.getJSONObject(i).getJSONObject("opening_hours").getString("open_now").equals("true")) {
-                                    poi.setOpenNow("YES");
-                                } else {
-                                    poi.setOpenNow("NO");
-                                }
-                            }
-                        } else {
-                            poi.setOpenNow("Not Known");
-                        }
-                        if (jsonArray.getJSONObject(i).has("geometry"))
+                        poi.setRating(jsonArray.getJSONObject(i).optString("rating"));
+                        poi.setDistance(jsonArray.getJSONObject(i).optString("distance"));
+
+                        if (jsonArray.getJSONObject(i).has("coordinates"))
                         {
-                            if (jsonArray.getJSONObject(i).getJSONObject("geometry").has("location"))
-                            {
-                                if (jsonArray.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").has("lat"))
-                                {
-                                    poi.setLatLng(Double.parseDouble(jsonArray.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getString("lat")), Double.parseDouble(jsonArray.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getString("lng")));
-                                }
-                            }
-                        }
-                        if (jsonArray.getJSONObject(i).has("vicinity")) {
-                            poi.setVicinity(jsonArray.getJSONObject(i).optString("vicinity"));
-                        }
-                        if (jsonArray.getJSONObject(i).has("types")) {
-                            JSONArray typesArray = jsonArray.getJSONObject(i).getJSONArray("types");
-                            for (int j = 0; j < typesArray.length(); j++) {
-                                poi.setCategory(typesArray.getString(j) + ", " + poi.getCategory());
-                            }
+                            poi.setLatLng(Double.parseDouble(jsonArray.getJSONObject(i).getJSONObject("coordinates").optString("latitude")),
+                                    Double.parseDouble(jsonArray.getJSONObject(i).getJSONObject("coordinates").optString("longitude")));
                         }
                     }
                     parseList.add(poi);
                 }
             }
         } catch (MalformedURLException e) {
+            System.out.print(e + "IOException");
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();

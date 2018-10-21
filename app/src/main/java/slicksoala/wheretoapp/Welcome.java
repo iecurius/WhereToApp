@@ -1,5 +1,7 @@
 package slicksoala.wheretoapp;
 
+import android.accessibilityservice.GestureDescription;
+import android.app.DownloadManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -75,8 +77,13 @@ public class Welcome extends AppCompatActivity implements View.OnClickListener{
 
         FoursquarePlacesListTask fstask = new FoursquarePlacesListTask();
         fsplacesList = fstask.execute(currLat, currLong, rad, activitySelect.toString()).get();
-        Place placeToGo2 = (Place) gplacesList.get(new Random().nextInt(gplacesList.size()));
+        Place placeToGo2 = (Place) fsplacesList.get(new Random().nextInt(fsplacesList.size()));
         System.out.println("FOURSQUARE PLACE NAME:" + placeToGo2.getName());
+
+        YelpFusionPlacesListTask ytask = new YelpFusionPlacesListTask();
+        yplacesList = ytask.execute(currLat, currLong, rad, activitySelect.toString()).get();
+        Place placeToGo3 = (Place) yplacesList.get(new Random().nextInt(yplacesList.size()));
+        System.out.println("YELP FUSION PLACE NAME:" + placeToGo3.getName());
     }
 
     @Override

@@ -1,7 +1,7 @@
 package slicksoala.wheretoapp;
 
 public enum ActivityDo {
-    PLACESTOGO("Sigthseeing"),
+    PLACESTOGO("Sightseeing"),
     STUFFTOEAT("Food"),
     THINGSTODO("What To Do");
 
