@@ -46,12 +46,8 @@ public class GooglePlacesListTask extends AsyncTask<String, Void, ArrayList<Plac
 
         String url_base = PLACES_API_BASE + LOC_PAR + currLat + "," + currLong + RAD_PAR +
                 rad;
-        String urlString = "";
-        StringBuffer sb = null;
         String apikey_base = KEY_PAR + API_KEY;
-
-
-        urlString = url_base + TYP_PAR + placeType + apikey_base;
+        String urlString = url_base + TYP_PAR + placeType + apikey_base;
 
         URL url;
         HttpURLConnection urlConnection = null;

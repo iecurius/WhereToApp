@@ -23,7 +23,7 @@ public class Welcome extends AppCompatActivity implements View.OnClickListener{
     private Range rangeSelect = null;
     private String currLat, currLong;
     private String rad = "0";
-    ArrayList placesList;
+    ArrayList gplacesList, fsplacesList, yplacesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,13 +69,14 @@ public class Welcome extends AppCompatActivity implements View.OnClickListener{
             rad = radiusT;
 
         GooglePlacesListTask gtask = new GooglePlacesListTask();
-        placesList = gtask.execute(currLat, currLong, rad, activitySelect.toString()).get();
-        Place placeToGo = (Place) placesList.get(new Random().nextInt(placesList.size()));
+        gplacesList = gtask.execute(currLat, currLong, rad, activitySelect.toString()).get();
+        Place placeToGo = (Place) gplacesList.get(new Random().nextInt(gplacesList.size()));
         System.out.println("GOOGLE PLACE NAME:" + placeToGo.getName());
 
         FoursquarePlacesListTask fstask = new FoursquarePlacesListTask();
-        
-
+        fsplacesList = fstask.execute(currLat, currLong, rad, activitySelect.toString()).get();
+        Place placeToGo2 = (Place) gplacesList.get(new Random().nextInt(gplacesList.size()));
+        System.out.println("FOURSQUARE PLACE NAME:" + placeToGo2.getName());
     }
 
     @Override
