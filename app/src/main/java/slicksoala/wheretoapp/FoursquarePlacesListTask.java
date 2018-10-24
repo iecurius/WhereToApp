@@ -42,9 +42,9 @@ public class FoursquarePlacesListTask extends AsyncTask<String, Void, ArrayList<
         currLong = params[1];
         rad = params[2];
         activitySelect = params[3];
-        if (activitySelect.equals("Sightseeing"))
+        if (activitySelect.equals("Sights"))
             placeType = placeTypePTG;
-        else if (activitySelect.equals("What To Do"))
+        else if (activitySelect.equals("Roam"))
             placeType = placeTypeTTD;
         else
             placeType = placeTypeSTE;
