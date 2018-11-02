@@ -53,6 +53,7 @@ public class DetailsForm extends AppCompatActivity {
         paceSpinner.setAdapter(paceAdapter);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     public void goTo() throws ExecutionException, InterruptedException {
         /*if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -121,6 +122,8 @@ public class DetailsForm extends AppCompatActivity {
         Intent mapsIntent = new Intent(DetailsForm.this, WhereToMaps.class);
         startActivity(mapsIntent);
     }
+=======
+>>>>>>> parent of 2084e8d... Optimal Route calculation implemented
 =======
 >>>>>>> parent of 2084e8d... Optimal Route calculation implemented
 }

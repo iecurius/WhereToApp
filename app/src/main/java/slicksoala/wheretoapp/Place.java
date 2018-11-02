@@ -15,6 +15,7 @@ public class Place {
         this.rating="";
         this.opennow="";
         this.vicinity="";
+<<<<<<< HEAD
     }
     public Place(String name, double lat, double lng) {
         this.name = name;
@@ -23,6 +24,8 @@ public class Place {
         this.category="";
         this.rating="";
         this.opennow="";
+=======
+>>>>>>> parent of 2084e8d... Optimal Route calculation implemented
     }
     public String getName() {
         return name;
