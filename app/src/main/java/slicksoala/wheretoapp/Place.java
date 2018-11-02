@@ -13,6 +13,14 @@ public class Place {
         this.rating="";
         this.opennow="";
     }
+    public Place(String name, double lat, double lng) {
+        this.name = name;
+        this.latitude = lat;
+        this.longitude = lng;
+        this.category="";
+        this.rating="";
+        this.opennow="";
+    }
     public String getName() {
         return name;
     }

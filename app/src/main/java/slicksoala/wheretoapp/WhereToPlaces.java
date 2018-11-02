@@ -54,6 +54,10 @@ class WhereToPlaces {
         this.kList.add(place);
     }
 
+    public void addtoKList(int index, Place place) {
+        this.kList.add(index, place);
+    }
+
     public Place getfromMasterList(int index) {
         return masterList.get(index);
     }

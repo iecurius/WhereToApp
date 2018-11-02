@@ -144,8 +144,7 @@ public class DetailsForm extends AppCompatActivity {
         for (int d = 1; d < 20; d++) {
             Toast.makeText(DetailsForm.this, route, Toast.LENGTH_LONG).show();
         }
-
+        Intent mapsIntent = new Intent(DetailsForm.this, WhereToMaps.class);
+        startActivity(mapsIntent);
     }
-
-
 }
