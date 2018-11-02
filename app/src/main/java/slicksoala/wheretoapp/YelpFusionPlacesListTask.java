@@ -38,14 +38,14 @@ public class YelpFusionPlacesListTask extends AsyncTask<String, Void, ArrayList<
         currLong = params[1];
         rad = params[2];
         activitySelect = params[3];
-        if (activitySelect.equals("Sights"))
+        if (activitySelect.equals("Sightseeing"))
             placeType = placeTypePTG;
-        else if (activitySelect.equals("Roam"))
+        else if (activitySelect.equals("What To Do"))
             placeType = placeTypeTTD;
         else
             placeType = placeTypeSTE;
 
-        String urlString = YELP_API_BASE + TER_PAR + placeType + LAT_PAR + currLat + LON_PAR + currLong + RAD_PAR + rad;
+        String urlString = YELP_API_BASE + TER_PAR + placeType + LAT_PAR + currLat + LON_PAR + currLong + RAD_PAR + "1000";
 
         URL url;
         HttpURLConnection urlConnection = null;
@@ -75,6 +75,7 @@ public class YelpFusionPlacesListTask extends AsyncTask<String, Void, ArrayList<
                     if (jsonArray.getJSONObject(i).has("name")) {
                         poi.setName(jsonArray.getJSONObject(i).optString("name"));
                         poi.setRating(jsonArray.getJSONObject(i).optString("rating"));
+                        poi.setDistance(jsonArray.getJSONObject(i).optString("distance"));
 
                         if (jsonArray.getJSONObject(i).has("coordinates"))
                         {

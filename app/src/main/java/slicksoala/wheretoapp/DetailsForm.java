@@ -7,17 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
-
-import com.skyfishjy.library.RippleBackground;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.concurrent.ExecutionException;
 
 public class DetailsForm extends AppCompatActivity {
     private EditText returnTime;
@@ -26,7 +16,6 @@ public class DetailsForm extends AppCompatActivity {
     private Spinner travelSpinner;
     private Spinner paceSpinner;
     private Button generateButton;
-    private WhereToPlaces sing;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,24 +25,8 @@ public class DetailsForm extends AppCompatActivity {
         activitySpinner = findViewById(R.id.activitySpinner);
         travelSpinner = findViewById(R.id.travelSpinner);
         paceSpinner = findViewById(R.id.paceSpinner);
-        this.sing = WhereToPlaces.getInstance();
-        //generateButton = (Button) findViewById(R.id.generate);
-        RippleBackground rippleBackground = (RippleBackground) findViewById(R.id.content);
-        rippleBackground.startRippleAnimation();
-        ImageView go = findViewById(R.id.centerImage);
-        go.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    goTo();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        /*generateButton.setOnClickListener(new View.OnClickListener() {
+        generateButton = (Button) findViewById(R.id.generate);
+        generateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Welcome.class);
@@ -61,7 +34,7 @@ public class DetailsForm extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        });*/
+        });
 
         ArrayAdapter<String> radiusAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, Radius.values());
         radiusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -71,7 +44,7 @@ public class DetailsForm extends AppCompatActivity {
         activityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         activitySpinner.setAdapter(activityAdapter);
 
-        ArrayAdapter<String> travelAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, TravelType.values());
+        ArrayAdapter<String> travelAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, Range.values());
         travelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         travelSpinner.setAdapter(travelAdapter);
 
@@ -79,6 +52,7 @@ public class DetailsForm extends AppCompatActivity {
         paceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         paceSpinner.setAdapter(paceAdapter);
     }
+<<<<<<< HEAD
 
     public void goTo() throws ExecutionException, InterruptedException {
         /*if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -147,4 +121,6 @@ public class DetailsForm extends AppCompatActivity {
         Intent mapsIntent = new Intent(DetailsForm.this, WhereToMaps.class);
         startActivity(mapsIntent);
     }
+=======
+>>>>>>> parent of 2084e8d... Optimal Route calculation implemented
 }

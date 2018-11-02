@@ -37,9 +37,9 @@ public class GooglePlacesListTask extends AsyncTask<String, Void, ArrayList<Plac
         currLong = params[1];
         rad = params[2];
         activitySelect = params[3];
-        if (activitySelect.equals("Sights"))
+        if (activitySelect.equals("Sightseeing"))
             placeType = placeTypePTG;
-        else if (activitySelect.equals("Roam"))
+        else if (activitySelect.equals("What To Do"))
             placeType = placeTypeTTD;
         else
             placeType = placeTypeSTE;
@@ -52,6 +52,7 @@ public class GooglePlacesListTask extends AsyncTask<String, Void, ArrayList<Plac
         URL url;
         HttpURLConnection urlConnection = null;
         String resultString = "";
+        JSONObject jo;
         ArrayList<Place> parseList = new ArrayList();
 
         try {
@@ -81,9 +82,7 @@ public class GooglePlacesListTask extends AsyncTask<String, Void, ArrayList<Plac
                             {
                                 if (jsonArray.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").has("lat"))
                                 {
-                                    poi.setLatLng(Double.parseDouble(jsonArray.getJSONObject(i).getJSONObject("geometry").
-                                            getJSONObject("location").getString("lat")), Double.parseDouble(jsonArray.getJSONObject(i).
-                                            getJSONObject("geometry").getJSONObject("location").getString("lng")));
+                                    poi.setLatLng(Double.parseDouble(jsonArray.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getString("lat")), Double.parseDouble(jsonArray.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getString("lng")));
                                 }
                             }
                         }

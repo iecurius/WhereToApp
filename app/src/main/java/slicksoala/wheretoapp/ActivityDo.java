@@ -1,9 +1,9 @@
 package slicksoala.wheretoapp;
 
 public enum ActivityDo {
-    SIGHTSEE("Sights"),
-    EAT("Food"),
-    WANDER("Roam");
+    PLACESTOGO("Sightseeing"),
+    STUFFTOEAT("Food"),
+    THINGSTODO("What To Do");
 
     private String val;
 

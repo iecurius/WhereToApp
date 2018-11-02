@@ -5,13 +5,16 @@ public class Place {
     private String category;
     private String rating;
     private String opennow;
+    private String vicinity;
     private double latitude,longitude;
+    private double distance;
     public Place()
     {
         this.name="";
         this.category="";
         this.rating="";
         this.opennow="";
+        this.vicinity="";
     }
     public Place(String name, double lat, double lng) {
         this.name = name;
@@ -45,17 +48,18 @@ public class Place {
     public void setOpenNow(String open) {
         this.opennow = open;
     }
+    public String getVicinity() {
+        return vicinity;
+    }
+    public void setVicinity(String vicinity) {
+        this.vicinity = vicinity;
+    }
     public void setLatLng(double lat,double lon)
     {
         this.latitude=lat;
         this.longitude=lon;
     }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
+    public void setDistance(String dist) {
+        this.distance = Double.parseDouble(dist);
     }
 }

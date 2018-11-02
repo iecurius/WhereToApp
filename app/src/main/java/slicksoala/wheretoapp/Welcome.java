@@ -1,5 +1,7 @@
 package slicksoala.wheretoapp;
 
+import android.accessibilityservice.GestureDescription;
+import android.app.DownloadManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +12,6 @@ import com.github.clans.fab.FloatingActionButton;
 import com.skyfishjy.library.RippleBackground;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
@@ -21,12 +22,10 @@ public class Welcome extends AppCompatActivity implements View.OnClickListener{
     final String radiusT = "48280";
 
     private ActivityDo activitySelect = null;
-    private TravelType travelTypeSelect = null;
+    private Range rangeSelect = null;
     private String currLat, currLong;
     private String rad = "0";
-    ArrayList<Place> gplacesList, fsplacesList, yplacesList;
-    ArrayList<Place> placesList;
-    HashMap<String, Place> places;
+    ArrayList gplacesList, fsplacesList, yplacesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +63,9 @@ public class Welcome extends AppCompatActivity implements View.OnClickListener{
         currLat = "33.78508547";
         currLong = "-84.3879824";
 
-        if (travelTypeSelect == TravelType.WALK)
+        if (rangeSelect == Range.WALK)
             rad = radiusW;
-        else if (travelTypeSelect == TravelType.DRIVE)
+        else if (rangeSelect == Range.DRIVE)
             rad = radiusD;
         else
             rad = radiusT;
@@ -85,26 +84,6 @@ public class Welcome extends AppCompatActivity implements View.OnClickListener{
         yplacesList = ytask.execute(currLat, currLong, rad, activitySelect.toString()).get();
         Place placeToGo3 = (Place) yplacesList.get(new Random().nextInt(yplacesList.size()));
         System.out.println("YELP FUSION PLACE NAME:" + placeToGo3.getName());
-
-        /*GooglePlacesListTask gtask = new GooglePlacesListTask();
-        placesList = gtask.execute(currLat, currLong, rad, activitySelect.toString()).get();
-
-        FoursquarePlacesListTask fstask = new FoursquarePlacesListTask();
-        placesList.addAll(fstask.execute(currLat, currLong, rad, activitySelect.toString()).get());
-
-        YelpFusionPlacesListTask ytask = new YelpFusionPlacesListTask();
-        placesList.addAll(ytask.execute(currLat, currLong, rad, activitySelect.toString()).get());
-
-        for (Place p : placesList) {
-            if (places.containsKey(p.getName())) {
-                if (!p.getRating().equals("")) {
-                    places.put(p.getName(), p);
-                }
-            } else {
-                places.put(p.getName(), p);
-            }
-        }
-        System.out.println(places.size());*/
     }
 
     @Override
@@ -112,11 +91,11 @@ public class Welcome extends AppCompatActivity implements View.OnClickListener{
         int id = v.getId();
         switch (id){
             case R.id.centerImage:
-                if (activitySelect == null && travelTypeSelect == null) {
+                if (activitySelect == null && rangeSelect == null) {
                     Toast.makeText(Welcome.this, "Please select an activity and range!", Toast.LENGTH_LONG).show();
                 } else if (activitySelect == null) {
                     Toast.makeText(Welcome.this, "Please select an activity!", Toast.LENGTH_LONG).show();
-                } else if (travelTypeSelect == null) {
+                } else if (rangeSelect == null) {
                     Toast.makeText(Welcome.this, "Please select a range!", Toast.LENGTH_LONG).show();
                 } else {
                     try {
@@ -129,24 +108,28 @@ public class Welcome extends AppCompatActivity implements View.OnClickListener{
                 }
                 break;
             case R.id.walkFAM:
-                Toast.makeText(Welcome.this, TravelType.WALK.toString(), Toast.LENGTH_SHORT).show();
-                travelTypeSelect = TravelType.WALK;
+                Toast.makeText(Welcome.this, Range.WALK.toString(), Toast.LENGTH_SHORT).show();
+                rangeSelect = Range.WALK;
                 break;
             case R.id.driveFAM:
-                Toast.makeText(Welcome.this, TravelType.DRIVE.toString(), Toast.LENGTH_SHORT).show();
-                travelTypeSelect = TravelType.DRIVE;
+                Toast.makeText(Welcome.this, Range.DRIVE.toString(), Toast.LENGTH_SHORT).show();
+                rangeSelect = Range.DRIVE;
+                break;
+            case R.id.travelFAM:
+                Toast.makeText(Welcome.this, Range.TRAVEL.toString(), Toast.LENGTH_SHORT).show();
+                rangeSelect = Range.TRAVEL;
                 break;
             case R.id.ptgACT:
-                Toast.makeText(Welcome.this, ActivityDo.SIGHTSEE.toString(), Toast.LENGTH_SHORT).show();
-                activitySelect = ActivityDo.SIGHTSEE;
+                Toast.makeText(Welcome.this, ActivityDo.PLACESTOGO.toString(), Toast.LENGTH_SHORT).show();
+                activitySelect = ActivityDo.PLACESTOGO;
                 break;
             case R.id.ttdACT:
-                Toast.makeText(Welcome.this, ActivityDo.WANDER.toString(), Toast.LENGTH_SHORT).show();
-                activitySelect = ActivityDo.WANDER;;
+                Toast.makeText(Welcome.this, ActivityDo.THINGSTODO.toString(), Toast.LENGTH_SHORT).show();
+                activitySelect = ActivityDo.THINGSTODO;;
                 break;
             case R.id.steACT:
-                Toast.makeText(Welcome.this, ActivityDo.EAT.toString(), Toast.LENGTH_SHORT).show();
-                activitySelect = ActivityDo.EAT;
+                Toast.makeText(Welcome.this, ActivityDo.STUFFTOEAT.toString(), Toast.LENGTH_SHORT).show();
+                activitySelect = ActivityDo.STUFFTOEAT;
                 break;
         }
     }
